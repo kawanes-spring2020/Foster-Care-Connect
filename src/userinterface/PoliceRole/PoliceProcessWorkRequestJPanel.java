@@ -1,0 +1,496 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package userinterface.PoliceRole;
+
+import Business.Enterprise.Enterprise;
+import Business.Organization.PoliceOrganization;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.BackgroundVerificationWorkRequest;
+import Business.WorkQueue.LabTestWorkRequest;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Image;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+/**
+ *
+ * @author Shubham
+ */
+public class PoliceProcessWorkRequestJPanel extends javax.swing.JPanel {
+
+    /**
+     * Creates new form PoliceProcessWorkRequestJPanel
+     */
+    JPanel userProcessContainer;
+    BackgroundVerificationWorkRequest request;
+    UserAccount account;
+    PoliceOrganization organization;
+    Enterprise enterprise;
+    
+    Image verfied= null;
+    Image notverfied=null;
+    PoliceProcessWorkRequestJPanel(JPanel userProcessContainer, BackgroundVerificationWorkRequest request,UserAccount account, PoliceOrganization organization, Enterprise enterprise) {
+        initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.request = request;
+        this.account = account;
+        this.organization = organization;
+        this.enterprise = enterprise;
+        
+        System.out.println("Request in police processing: ");
+        System.out.println(request.getPersonalInfoMap().get("personalInfoStatus"));
+        System.out.println(request.getContactInfoMap().get("contactInfoStatus"));
+        System.out.println(request.getResidentialHistoryMap().get("residentialInfoStatus"));
+        System.out.println(request.getEmploymentHistoryMap().get("employmentInfoStatus"));
+        System.out.println(request.getReferenceMap().get("referenceInfoStatus"));
+        try {
+            verfied = ImageIO.read(new File("resources/verified.png"));
+            notverfied = ImageIO.read(new File("resources/notverified.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PoliceViewDataJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        setup();
+        verifyPersonal.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent ev) {
+               if(ev.getStateChange()==ItemEvent.SELECTED){
+                    verifyPersonal.setIcon(new ImageIcon(verfied));
+               } else if(ev.getStateChange()==ItemEvent.DESELECTED){
+                    verifyPersonal.setIcon(new ImageIcon(notverfied));
+               }
+            }
+        });
+        verifyContact.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent ev) {
+               if(ev.getStateChange()==ItemEvent.SELECTED){
+                    verifyContact.setIcon(new ImageIcon(verfied));
+               } else if(ev.getStateChange()==ItemEvent.DESELECTED){
+                    verifyContact.setIcon(new ImageIcon(notverfied));
+               }
+            }
+        });
+        verifyResidential.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent ev) {
+               if(ev.getStateChange()==ItemEvent.SELECTED){
+                    verifyResidential.setIcon(new ImageIcon(verfied));
+               } else if(ev.getStateChange()==ItemEvent.DESELECTED){
+                    verifyResidential.setIcon(new ImageIcon(notverfied));
+               }
+            }
+        });
+        verifyEmployment.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent ev) {
+               if(ev.getStateChange()==ItemEvent.SELECTED){
+                    verifyEmployment.setIcon(new ImageIcon(verfied));
+               } else if(ev.getStateChange()==ItemEvent.DESELECTED){
+                    verifyEmployment.setIcon(new ImageIcon(notverfied));
+               }
+            }
+        });
+        verifyReferences.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent ev) {
+               if(ev.getStateChange()==ItemEvent.SELECTED){
+                    verifyReferences.setIcon(new ImageIcon(verfied));
+               } else if(ev.getStateChange()==ItemEvent.DESELECTED){
+                    verifyReferences.setIcon(new ImageIcon(notverfied));
+               }
+            }
+        });
+        
+        checkBackground();
+        
+    }
+    
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        resultJTextField = new javax.swing.JTextField();
+        submitJButton = new javax.swing.JButton();
+        backJButton = new javax.swing.JButton();
+        jLabel45 = new javax.swing.JLabel();
+        verifyPersonal = new javax.swing.JToggleButton();
+        jLabel46 = new javax.swing.JLabel();
+        jLabel47 = new javax.swing.JLabel();
+        verifyContact = new javax.swing.JToggleButton();
+        jLabel48 = new javax.swing.JLabel();
+        jLabel49 = new javax.swing.JLabel();
+        verifyEmployment = new javax.swing.JToggleButton();
+        verifyResidential = new javax.swing.JToggleButton();
+        verifyReferences = new javax.swing.JToggleButton();
+        jLabel50 = new javax.swing.JLabel();
+        jLabel51 = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+
+        resultJTextField.setFont(new java.awt.Font("Verdana", 0, 16)); // NOI18N
+        resultJTextField.setEnabled(false);
+
+        submitJButton.setBackground(new java.awt.Color(0, 0, 0));
+        submitJButton.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
+        submitJButton.setForeground(new java.awt.Color(255, 255, 255));
+        submitJButton.setText("Submit Result");
+        submitJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitJButtonActionPerformed(evt);
+            }
+        });
+
+        backJButton.setBackground(new java.awt.Color(0, 0, 0));
+        backJButton.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
+        backJButton.setForeground(new java.awt.Color(255, 255, 255));
+        backJButton.setText("<<Back");
+        backJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backJButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel45.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        jLabel45.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel45.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel45.setText("Process Request");
+
+        verifyPersonal.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        verifyPersonal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verifyPersonalActionPerformed(evt);
+            }
+        });
+
+        jLabel46.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
+        jLabel46.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel46.setText("Personal Info");
+
+        jLabel47.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
+        jLabel47.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel47.setText("Contact Info");
+
+        verifyContact.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        verifyContact.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verifyContactActionPerformed(evt);
+            }
+        });
+
+        jLabel48.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
+        jLabel48.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel48.setText("Residential History");
+
+        jLabel49.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
+        jLabel49.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel49.setText("Employment History");
+
+        verifyEmployment.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        verifyEmployment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verifyEmploymentActionPerformed(evt);
+            }
+        });
+
+        verifyResidential.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        verifyResidential.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verifyResidentialActionPerformed(evt);
+            }
+        });
+
+        verifyReferences.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        verifyReferences.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verifyReferencesActionPerformed(evt);
+            }
+        });
+
+        jLabel50.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
+        jLabel50.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel50.setText("References");
+
+        jLabel51.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
+        jLabel51.setForeground(new java.awt.Color(0, 51, 255));
+        jLabel51.setText("Background Check Status");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel45, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(420, 420, 420)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(backJButton)
+                        .addGap(147, 147, 147)
+                        .addComponent(submitJButton))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel47)
+                                .addComponent(jLabel46)
+                                .addComponent(jLabel48)
+                                .addComponent(jLabel49)
+                                .addComponent(jLabel50))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(verifyEmployment, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                                .addComponent(verifyPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(verifyContact, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(verifyResidential, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(verifyReferences, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel51)
+                            .addGap(18, 18, 18)
+                            .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(618, 618, 618))
+        );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {verifyContact, verifyEmployment, verifyPersonal, verifyReferences, verifyResidential});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel46, jLabel47, jLabel48, jLabel49, jLabel50, jLabel51});
+
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel45)
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(verifyPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(verifyContact, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(verifyResidential, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(verifyEmployment, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(verifyReferences, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel51))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(backJButton)
+                    .addComponent(submitJButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel46, jLabel47, jLabel48, jLabel49, jLabel50, jLabel51, verifyContact, verifyEmployment, verifyPersonal, verifyReferences, verifyResidential});
+
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
+        request.setBackgroundCheck(resultJTextField.getText());
+        request.setStatus("Completed");
+        JOptionPane.showMessageDialog(null,"Police Verification Completed!!");
+        
+        //next
+        //since component array did not work, had to pass enterprise,account, organization to create police work area on submit for returning
+        
+        PoliceWorkAreaJPanel policeWorkAreaJPanel = new PoliceWorkAreaJPanel(userProcessContainer, account,  organization,  enterprise);
+                userProcessContainer.add("policeWorkAreaJPanel", policeWorkAreaJPanel);
+                CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+                layout.next(userProcessContainer);
+        
+        
+        /* this doesnt work if I go from view details -> opens tabbed pane as that was the previous container
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout)userProcessContainer.getLayout();
+        Component[] comps = this.userProcessContainer.getComponents();
+        for(Component comp: comps){
+            if(comp instanceof PoliceWorkAreaJPanel){
+                PoliceWorkAreaJPanel area = (PoliceWorkAreaJPanel)comp;
+                area.populateTable();
+                area.populateTable1();
+            }
+        }
+        layout.previous(userProcessContainer);
+        */        
+    }//GEN-LAST:event_submitJButtonActionPerformed
+
+    private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
+
+        PoliceWorkAreaJPanel policeWorkAreaJPanel = new PoliceWorkAreaJPanel(userProcessContainer, account,  organization,  enterprise);
+        userProcessContainer.add("policeWorkAreaJPanel", policeWorkAreaJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+        
+    }//GEN-LAST:event_backJButtonActionPerformed
+
+    private void verifyPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyPersonalActionPerformed
+        // TODO add your handling code here:
+        if(verifyPersonal.isSelected()){
+            this.request.getPersonalInfoMap().put("personalInfoStatus", "true");
+        }
+        else{
+            this.request.getPersonalInfoMap().put("personalInfoStatus", "false");
+        }
+        
+        checkBackground();
+    }//GEN-LAST:event_verifyPersonalActionPerformed
+
+    private void verifyContactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyContactActionPerformed
+        // TODO add your handling code here:
+        if(verifyContact.isSelected()){
+            this.request.getContactInfoMap().put("contactInfoStatus", "true");
+        }
+        else{
+            this.request.getContactInfoMap().put("contactInfoStatus", "false");
+        }
+        
+        checkBackground();
+    }//GEN-LAST:event_verifyContactActionPerformed
+
+    private void verifyEmploymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyEmploymentActionPerformed
+        // TODO add your handling code here:
+        if(verifyEmployment.isSelected()){
+            this.request.getEmploymentHistoryMap().put("employmentInfoStatus", "true");
+        }
+        else{
+            this.request.getEmploymentHistoryMap().put("employmentInfoStatus", "false");
+        }
+        checkBackground();
+    }//GEN-LAST:event_verifyEmploymentActionPerformed
+
+    private void verifyResidentialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyResidentialActionPerformed
+        // TODO add your handling code here:
+        if(verifyResidential.isSelected()){
+            this.request.getResidentialHistoryMap().put("residentialInfoStatus", "true");
+        }
+        else{
+            this.request.getResidentialHistoryMap().put("residentialInfoStatus", "false");
+        }
+        checkBackground();
+    }//GEN-LAST:event_verifyResidentialActionPerformed
+
+    private void verifyReferencesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyReferencesActionPerformed
+        // TODO add your handling code here:
+        if(verifyReferences.isSelected()){
+            this.request.getReferenceMap().put("referenceInfoStatus", "true");
+        }
+        else{
+            this.request.getReferenceMap().put("referenceInfoStatus", "false");
+        }
+        
+        checkBackground();
+    }//GEN-LAST:event_verifyReferencesActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backJButton;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JTextField resultJTextField;
+    private javax.swing.JButton submitJButton;
+    private javax.swing.JToggleButton verifyContact;
+    private javax.swing.JToggleButton verifyEmployment;
+    private javax.swing.JToggleButton verifyPersonal;
+    private javax.swing.JToggleButton verifyReferences;
+    private javax.swing.JToggleButton verifyResidential;
+    // End of variables declaration//GEN-END:variables
+
+    private void checkBackground() {
+        if(verifyPersonal.isSelected() && verifyContact.isSelected() && verifyResidential.isSelected() && verifyEmployment.isSelected() && verifyReferences.isSelected()){
+            resultJTextField.setText("Approved");
+        }
+        else{
+            resultJTextField.setText("Rejected");
+        }
+    }
+
+    private void setup() {
+        try {
+            verfied = ImageIO.read(new File("resources/verified.png"));
+            notverfied = ImageIO.read(new File("resources/notverified.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PoliceViewDataJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(this.request.getPersonalInfoMap().get("personalInfoStatus").equals("false")){
+            verifyPersonal.setIcon(new ImageIcon(notverfied));
+            verifyPersonal.setSelected(false);
+            System.out.println("personal false");
+            
+            
+            
+        }
+        if(this.request.getPersonalInfoMap().get("personalInfoStatus").equals("true")){
+            verifyPersonal.setIcon(new ImageIcon(verfied));
+            verifyPersonal.setSelected(true);
+            System.out.println("personal true");
+        }
+        if(this.request.getContactInfoMap().get("contactInfoStatus").equals("false")){
+            verifyContact.setIcon(new ImageIcon(notverfied));
+            verifyContact.setSelected(false);
+            System.out.println("contact false");
+            
+        }
+        if(this.request.getContactInfoMap().get("contactInfoStatus").equals("true")){
+            verifyContact.setIcon(new ImageIcon(verfied));
+            verifyContact.setSelected(true);
+            System.out.println("contact true");
+        }
+        if(this.request.getResidentialHistoryMap().get("residentialInfoStatus").equals("false")){
+            verifyResidential.setIcon(new ImageIcon(notverfied));
+            verifyResidential.setSelected(false);
+            System.out.println("resi false");
+        }
+        if(this.request.getResidentialHistoryMap().get("residentialInfoStatus").equals("true")){
+            verifyResidential.setIcon(new ImageIcon(verfied));
+            verifyResidential.setSelected(true);
+            System.out.println("resi true");
+            
+        }
+        if(this.request.getEmploymentHistoryMap().get("employmentInfoStatus").equals("false")){
+            verifyEmployment.setIcon(new ImageIcon(notverfied));
+            verifyEmployment.setSelected(false);
+            System.out.println("emp false");
+            
+        }
+        if(this.request.getEmploymentHistoryMap().get("employmentInfoStatus").equals("true")){
+            verifyEmployment.setIcon(new ImageIcon(verfied));
+            verifyEmployment.setSelected(true);
+            System.out.println("emp true");
+            
+        }
+        if(this.request.getReferenceMap().get("referenceInfoStatus").equals("false")){
+            verifyReferences.setIcon(new ImageIcon(notverfied));
+            verifyReferences.setSelected(false);
+            System.out.println("ref false");
+        }
+        if(this.request.getReferenceMap().get("referenceInfoStatus").equals("true")){
+            verifyReferences.setIcon(new ImageIcon(verfied));
+            verifyReferences.setSelected(true);
+            System.out.println("ref true");
+        }
+    }
+}
